@@ -7,7 +7,9 @@ public class Player_Rotation : MonoBehaviour
 
     private float yRotation = 0f;
 
-    [SerializeField] private Transform playerTilt;
+    [SerializeField] private Transform visualTilt;
+    [SerializeField] private Transform cameraTilt;
+
     [SerializeField] float tiltAmount;
     [SerializeField] float tiltSmooth = 5f;
 
@@ -74,9 +76,11 @@ public class Player_Rotation : MonoBehaviour
         pitch = Mathf.Clamp(pitch, -tiltAmount, tiltAmount);
         roll = Mathf.Clamp(roll, -tiltAmount, tiltAmount);
 
-        // Solo modificamos X y Z, manteniendo Y intacto
         Quaternion targetTilt = Quaternion.Euler(pitch, 0f, roll);
 
-        playerTilt.localRotation = Quaternion.Slerp(playerTilt.localRotation, targetTilt, Time.deltaTime * tiltSmooth);
+        visualTilt.localRotation = Quaternion.Slerp(visualTilt.localRotation, targetTilt, Time.deltaTime * tiltSmooth);
+
+        cameraTilt.localRotation = Quaternion.Slerp(cameraTilt.localRotation, targetTilt, Time.deltaTime * tiltSmooth);
+
     }
 }

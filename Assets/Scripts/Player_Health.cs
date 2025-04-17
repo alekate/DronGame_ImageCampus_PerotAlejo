@@ -30,7 +30,7 @@ public class Player_Health : MonoBehaviour
             currentHealth = 0;
         }
 
-        if (isDead && Input.GetKey(KeyCode.R))
+        if (isDead && Input.GetKey(KeyCode.Space))
         {
             RestartScene();
         }

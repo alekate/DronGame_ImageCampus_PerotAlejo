@@ -14,6 +14,9 @@ public class Player_Shoot : MonoBehaviour
 
     [SerializeField] UIController uiController;
 
+    public ParticleSystem shootParticle;
+
+
     private void Awake() 
     {
         
@@ -21,6 +24,9 @@ public class Player_Shoot : MonoBehaviour
         {
             cam = Camera.main;
         }
+
+        shootParticle.Pause();
+
     }
 
     void Update()
@@ -35,6 +41,8 @@ public class Player_Shoot : MonoBehaviour
             var ray = cam.ScreenPointToRay(Input.mousePosition);
 
             uiController.FlashRedCrosshair();
+
+            shootParticle.Play();
 
             if (Physics.Raycast(ray, out RaycastHit hit, shootRange, destroyableLayer))
             {
