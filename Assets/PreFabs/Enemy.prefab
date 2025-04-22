@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1540250443698582739}
   - component: {fileID: 8676600624957020238}
   - component: {fileID: 3294993539310616368}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -558,7 +558,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2448
+  m_VersionIndex: 2454
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -695,7 +695,7 @@ GameObject:
   - component: {fileID: 5800593130620602278}
   - component: {fileID: 8444474373744848073}
   - component: {fileID: 7431600396000058038}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
