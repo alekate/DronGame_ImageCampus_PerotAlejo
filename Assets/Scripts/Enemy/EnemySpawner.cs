@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
-    public GameObject[] enemyPrefabs;       
+    public GameObject enemyPrefabs;       
     public Transform[] spawnPoints;         
     public float spawnInterval = 2f;        
     public int maxEnemies = 10;             
@@ -35,10 +35,15 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        GameObject prefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
-        GameObject enemy = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-        activeEnemies.Add(enemy);
+        GameObject enemy = ObjectPool_EnemySpawner.instance.GetPooledObject();
+        if (enemy != null)
+        {
+            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            enemy.transform.position = spawnPoint.position;
+            enemy.transform.rotation = Quaternion.identity;
+            enemy.SetActive(true);
+            activeEnemies.Add(enemy);
+        }
     }
+
 }

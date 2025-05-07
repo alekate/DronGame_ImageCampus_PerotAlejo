@@ -4,15 +4,15 @@ using UnityEngine;
 public class EnemyDeath : MonoBehaviour
 {
     public ParticleSystem enemyParticle;
-    public GameObject enemyVisual;
+    public GameObject enemyMesh;
 
     private void Awake()
     {
-        enemyVisual.SetActive(true);
+        enemyMesh.SetActive(true);
     }
     public void DeathEnemy()
     {
-        enemyVisual.SetActive(false);
+        enemyMesh.SetActive(false);
         StartCoroutine(PlayParticlesAndDestroy());
     }
 
@@ -21,11 +21,14 @@ public class EnemyDeath : MonoBehaviour
         if (enemyParticle != null)
         {
             ParticleSystem ps = Instantiate(enemyParticle, enemyParticle.transform.position, enemyParticle.transform.rotation);
+
             ps.Play();
+
             Destroy(ps.gameObject, ps.main.duration + 0.5f);
         }
 
         yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
+
+        gameObject.SetActive(false);
     }
 }

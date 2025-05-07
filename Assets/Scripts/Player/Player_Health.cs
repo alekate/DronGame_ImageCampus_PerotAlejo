@@ -1,12 +1,15 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using System.Collections;
 
 public class Player_Health : MonoBehaviour
 {
     public float currentHealth;
     public float maxHealth = 4;
     private bool isDead = false;
+    private bool isInvulnerable = false;
 
+    public float invulnerabilityDuration = 1f;
     public ParticleSystem sparksParticle;
     public Rigidbody rb;
 
@@ -18,7 +21,9 @@ public class Player_Health : MonoBehaviour
         currentHealth = maxHealth;
 
         if (uiController != null)
+        { 
             uiController.UpdateHealth(currentHealth, maxHealth);
+        }
     }
 
     private void Update()
@@ -35,20 +40,37 @@ public class Player_Health : MonoBehaviour
             RestartScene();
         }
     }
-
     void OnTriggerEnter(Collider collider)
     {
         if (collider.CompareTag("Ground"))
         {
-            if (currentHealth > 0)
-            {
-                currentHealth -= 1;
-                sparksParticle.Play();
-
-                if (uiController != null)
-                    uiController.UpdateHealth(currentHealth, maxHealth);
-            }
+            TakeDamage(1);
         }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        if (currentHealth > 0 && !isDead && !isInvulnerable)
+        {
+            currentHealth -= amount;
+            sparksParticle.Play();
+
+            if (uiController != null)
+            { 
+                uiController.UpdateHealth(currentHealth, maxHealth);
+            }
+
+            StartCoroutine(InvulnerabilityCoroutine());
+        }
+    }
+
+    private IEnumerator InvulnerabilityCoroutine()
+    {
+        isInvulnerable = true;
+
+        yield return new WaitForSeconds(invulnerabilityDuration);
+
+        isInvulnerable = false;
     }
 
     private void Dead()

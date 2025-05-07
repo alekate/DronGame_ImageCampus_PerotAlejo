@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class UIController : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] private TMP_Text healthText;
+
+    [Header("WhiteFlash")]
+    public Image whiteFlashImage;
+    public float flashDuration = 1f;
 
     public void UpdateHealth(float current, float max)
     {
@@ -59,5 +64,39 @@ public class UIController : MonoBehaviour
         int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
         timerText.text = $"{hours:00}:{minutes:00}:{seconds:00}";
+    }
+
+    public void PlayWhiteFlash()
+    {
+        StartCoroutine(WhiteFlashCoroutine());
+    }
+
+    private IEnumerator WhiteFlashCoroutine()
+    {
+        Color color = whiteFlashImage.color;
+
+        float t = 0;
+        while (t < flashDuration / 2f)
+        {
+            t += Time.deltaTime;
+
+            color.a = Mathf.Lerp(0, 1, t / (flashDuration / 2f));
+
+            whiteFlashImage.color = color;
+
+            yield return null;
+        }
+
+        t = 0;
+        while (t < flashDuration / 2f)
+        {
+            t += Time.deltaTime;
+
+            color.a = Mathf.Lerp(1, 0, t / (flashDuration / 2f));
+
+            whiteFlashImage.color = color;
+
+            yield return null;
+        }
     }
 }
